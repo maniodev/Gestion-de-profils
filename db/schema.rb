@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201160042) do
+ActiveRecord::Schema.define(version: 20151201164818) do
 
   create_table "profiles", force: :cascade do |t|
     t.string   "nom"
     t.string   "prenom"
-    t.string   "dob"
+    t.date     "dob"
     t.string   "avatar"
     t.text     "address"
     t.text     "about"
