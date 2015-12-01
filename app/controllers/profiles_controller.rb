@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy, :comment]
 
   # GET /profiles
   # GET /profiles.json
@@ -10,6 +10,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @comment = Comment.new
   end
 
   # GET /profiles/new
@@ -25,7 +26,6 @@ class ProfilesController < ApplicationController
   # POST /profiles.json
   def create
     @profile = Profile.new(profile_params)
-
     respond_to do |format|
       if @profile.save
         format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
@@ -61,6 +61,21 @@ class ProfilesController < ApplicationController
     end
   end
 
+
+  def comment
+    @comment = Comment.new(comment_params)
+    @comment.profile = @profile
+    respond_to do |format|
+      if @comment.save
+        format.js
+        format.html { redirect_to @comment.profile, notice: 'Comment was successfully created.' }
+      else
+        format.html { render :new }
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
@@ -70,5 +85,9 @@ class ProfilesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
       params.require(:profile).permit(:nom, :prenom, :dob, :avatar, :address, :about)
+    end
+
+    def comment_params
+      params.require(:comment).permit(:author, :content,:id)
     end
 end

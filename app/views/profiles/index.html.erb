@@ -1,37 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Profiles</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Prenom</th>
-      <th>Dob</th>
-      <th>Avatar</th>
-      <th>Address</th>
-      <th>About</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<ul class="list-group" style="padding-top: 20px">
+  <% @profiles.each do |profile| %>
+  <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-2">
+            <%= image_tag profile.avatar.thumb.url, class: "thumb" %>
+        </div>
+        <div class="col-md-7">
+          <p><%= "#{profile.prenom} #{profile.nom}" %></p>
+          <p>
+          <%= profile.address %>
+          </p>
+        </div>
+        <div class="col-md-3">
+          <%= link_to profile, class: "btn btn-xs btn-default" do %>
+                <span class="fa fa-expand"></span> Show
+          <% end %>
+           <%= link_to edit_profile_path(profile), class: "btn btn-xs btn-default" do %>
+                 <span class="fa fa-pencil-square-o"></span> Edit
+           <% end %>
+          <%= link_to profile, method: :delete, class: "btn btn-xs btn-default", data: { confirm: "Are you sure?" } do %>
+                 <span class="fa fa-trash"></span> Delete
+           <% end %>
+        </div>
 
-  <tbody>
-    <% @profiles.each do |profile| %>
-      <tr>
-        <td><%= profile.nom %></td>
-        <td><%= profile.prenom %></td>
-        <td><%= profile.dob %></td>
-        <td><%= profile.avatar %></td>
-        <td><%= profile.address %></td>
-        <td><%= profile.about %></td>
-        <td><%= link_to 'Show', profile %></td>
-        <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
-        <td><%= link_to 'Destroy', profile, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </div>
+  </li>
+  <% end %>
 
-<br>
-
-<%= link_to 'New Profile', new_profile_path %>
+</ul>

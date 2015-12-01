@@ -1,34 +1,77 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Nom:</strong>
-  <%= @profile.nom %>
-</p>
+<div class="row">
 
-<p>
-  <strong>Prenom:</strong>
-  <%= @profile.prenom %>
-</p>
+  <div class="col-md-5">
+      <%= image_tag @profile.avatar.larger_thumb.url, class: "thumbnail" %>
+  </div>
 
-<p>
-  <strong>Dob:</strong>
-  <%= @profile.dob %>
-</p>
+  <div class="col-md-7">
+    <p>
+      <strong>Nom:</strong>
+      <%= @profile.nom %>
+    </p>
 
-<p>
-  <strong>Avatar:</strong>
-  <%= @profile.avatar %>
-</p>
+    <p>
+      <strong>Prenom:</strong>
+      <%= @profile.prenom %>
+    </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @profile.address %>
-</p>
+    <p>
+      <strong>Dob:</strong>
+      <%= @profile.dob %>
+    </p>
 
-<p>
-  <strong>About:</strong>
-  <%= @profile.about %>
-</p>
+    <p>
+      <strong>Address:</strong>
+      <%= @profile.address %>
+    </p>
 
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
-<%= link_to 'Back', profiles_path %>
+    <p>
+      <strong>About:</strong>
+      <%= @profile.about %>
+    </p>
+
+  </div>
+
+</div>
+
+<h3>Comments</h3>
+<hr>
+
+  <table class="table table-striped">
+    <thead>
+    <tbody>
+      <% @profile.comments.each do |comment| %>
+      <tr>
+      <td>
+        <p><strong><%= comment.author %></strong>
+        -
+        <%
+         if comment.created_at.to_date == Date.today
+           concat "Aujourd'hui"
+         elsif comment.created_at.to_date == Date.yesterday
+           concat "Hier"
+         end
+          %>
+         <%= comment.created_at.strftime("%H:%M") %>
+         </p>
+        <p><%= comment.content %></p>
+      </td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+
+<h3>New comment</h3>
+<hr>
+<%= form_for [@profile, @comment], url: {action: "comment"}, html: {method: "post"}, remote: true do |f| %>
+  <div class="form-group">
+    <%= f.text_field :author, class: "form-control", placeholder: "Entrez votre nom " %>
+  </div>
+  <div class="form-group">
+      <%= f.text_area :content, class: "form-control", placeholder: "Entrez votre commentaire ici" %>
+  </div>
+    <%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>
