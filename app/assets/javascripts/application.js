@@ -14,4 +14,4 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-datepicker
-//= require profiles
+//= require profiles.coffee

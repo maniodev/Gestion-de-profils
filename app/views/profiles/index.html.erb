@@ -44,37 +44,3 @@
 </ul>
 <% end %>
 <%= paginate @profiles %>
-<script>
-
-$('#selectAll').click(function() {
-  if (this.checked) {
-    $(".export").prop('disabled', false);
-     $('input[id^="profiles_"]').each(function() {
-         this.checked = true;
-         $(this).parents().eq(2).addClass("selected");
-     });
-  } else {
-   $(".export").prop('disabled', true);
-    $('input[id^="profiles_"]').each(function() {
-         this.checked = false;
-         $(this).parents().eq(2).removeClass("selected");
-     });
-}
-});
-
-
-$(document).on('change', 'input[id^="profiles_"]', function(e) {
-  if(this.checked){
-    $(this).parents().eq(2).addClass("selected");
-  }else
-      $(".export").prop('disabled', true);
-      $(this).parents().eq(2).removeClass("selected");
-          $('input[id^="profiles_"]').each(function() {
-          if (this.checked == true){
-            $(".export").prop('disabled', false);
-              return false;
-          }
-      });
-});
-
-</script>
