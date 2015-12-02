@@ -8,12 +8,12 @@
 
 Profile.destroy_all
 
-10.times do
+15.times do
   Profile.create!({
     nom: Faker::Name.last_name,
     prenom: Faker::Name.first_name ,
     address: "#{Faker::Address.street_address} #{Faker::Address.street_name} #{Faker::Address.city}",
     dob: Faker::Date.backward(14),
     about: Faker::Hipster.paragraph
-  })  
+  })
 end
