@@ -36,6 +36,8 @@ gem 'wkhtmltopdf-binary'
 
 gem 'kaminari'
 
+gem 'faker'
+
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-form'
 # Use ActiveModel has_secure_password
