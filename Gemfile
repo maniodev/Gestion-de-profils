@@ -27,9 +27,17 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # upload gems
 gem 'carrierwave'
 gem "mini_magick"
+gem 'prawn-rails'
 
 
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
+
+gem 'kaminari'
+
+gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-form'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -1,0 +1,16 @@
+<tr>
+<td>
+  <p><strong><%= comment.author %></strong>
+  -
+  <%
+   if comment.created_at.to_date == Date.today
+     concat "Aujourd'hui"
+   elsif comment.created_at.to_date == Date.yesterday
+     concat "Hier"
+   end
+    %>
+   <%= comment.created_at.strftime("%H:%M") %>
+   </p>
+  <p><%= comment.content %></p>
+</td>
+</tr>

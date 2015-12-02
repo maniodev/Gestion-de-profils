@@ -1,41 +1,50 @@
 <%= form_for @profile, html: { multipart: true } do |f| %>
-  <% if @profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
 
-      <ul>
-      <% @profile.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="form-group">
+    <%= f.bootstrap_text_field :nom %>
+  </div>
+  <div class="form-group">
+    <%= f.bootstrap_text_field :prenom %>
+  </div>
 
-  <div class="field">
-    <%= f.label :nom %><br>
-    <%= f.text_field :nom %>
-  </div>
-  <div class="field">
-    <%= f.label :prenom %><br>
-    <%= f.text_field :prenom %>
-  </div>
-  <div class="field">
-    <%= f.label :dob %><br>
-    <%= f.date_field :dob %>
-  </div>
-  <div class="field">
-    <%= f.label :avatar %><br>
+  <div class="form-group">
+
+  <%= f.bootstrap_text_field :dob , {class:""} %>
+
+</div>
+
+
+
+  <div class="form-group">
+    <%= f.label :avatar %>
     <%= f.file_field :avatar %>
   </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_area :address %>
+  <% if @profile.avatar? %>
+    <%= image_tag @profile.avatar.thumb.url, class: "", style: "" %>
+    <%= link_to "Effacer", delete_image_profile_path(@profile),method: :delete, data: { confirm: "Are you sure?" }%>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.bootstrap_text_area :address %>
   </div>
-  <div class="field">
-    <%= f.label :about %><br>
-    <%= f.text_area :about %>
+  <div class="form-group">
+    <%= f.bootstrap_text_area :about %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= link_to 'Cancel', profiles_path, class: "btn btn-default" %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+
+
+<script type="text/javascript">
+
+
+  $('#profile_dob').datepicker({
+      format: "dd/mm/yyyy",
+      autoclose: true,
+      todayHighlight: true
+  });
+
+</script>

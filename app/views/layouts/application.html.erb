@@ -13,15 +13,19 @@
          <nav>
            <ul class="nav nav-pills pull-right">
              <li role="presentation" class="active"><%= link_to 'New Profile', new_profile_path %></li>
-             <li role="presentation"><a href="#">About</a></li>
-             <li role="presentation"><a href="#">Contact</a></li>
            </ul>
          </nav>
-         <h3 class="text-muted"><%= link_to "Profile Manager System", root_path %></h3>
+         <h3><%= link_to "Profile Manager System", root_path %></h3>
        </div>
+       <% if notice %>
+       <div class="alert alert-info">
+         <%= notice %>
+       </div>
+       <% end %>
+
             <%= yield %>
       <footer class="footer">
-        <p>&copy; 2015 Company, Inc.</p>
+        <p>Test Ruby on rails.</p>
       </footer>
 
 </div> <!-- /container -->

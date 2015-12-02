@@ -1,10 +1,10 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :edit, :update, :destroy, :comment]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy, :comment, :delete_image]
 
   # GET /profiles
   # GET /profiles.json
   def index
-    @profiles = Profile.all
+    @profiles = Profile.page(params[:page]).per(10)
   end
 
   # GET /profiles/1
@@ -44,7 +44,6 @@ class ProfilesController < ApplicationController
       if @profile.update(profile_params)
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
-      else
         format.html { render :edit }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
@@ -65,13 +64,43 @@ class ProfilesController < ApplicationController
   def comment
     @comment = Comment.new(comment_params)
     @comment.profile = @profile
+
     respond_to do |format|
       if @comment.save
+        # byebug
         format.js
         format.html { redirect_to @comment.profile, notice: 'Comment was successfully created.' }
       else
-        format.html { render :new }
+        # byebug
+        puts @comment.inspect
+        format.js
         format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
+  def export
+    @profiles = Profile.where(id: params[:profiles])
+    request.format = 'pdf'
+    respond_to do |format|
+      format.pdf do
+       render :pdf => 'file_name',
+       :template => 'profiles/export.pdf.erb',
+       :layout => 'pdf.html.erb',
+       :show_as_html => params[:debug].present?
+     end
+    end
+  end
+
+
+  def delete_image
+    @profile.remove_avatar!
+    respond_to do |format|
+      if @profile.save
+        format.html { redirect_to @profile, notice: 'The photo has been deleted' }
+      else
+        format.html { render :edit }
       end
     end
   end

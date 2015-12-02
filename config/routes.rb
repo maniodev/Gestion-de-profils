@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     resources :profiles do
       member do
         post "comment" => "profiles#comment"
+        delete "delete_image"
+      end
+      collection do
+        post "export"
       end
     end
 

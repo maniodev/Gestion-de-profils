@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF</title>
+  <!-- <%= wicked_pdf_stylesheet_link_tag "application" %> -->
+  <%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css", media: "all", "data-turbolinks-track" => true %>
+ <%= wicked_pdf_stylesheet_link_tag "bootstrap", "font-awesome" -%>
+  <%= wicked_pdf_javascript_include_tag 'jquery', 'leaflet','leaflet-providers', 'Google' %>
+</head>
+<style>
+
+  table, tr, td, th, tbody, thead, tfoot {
+    page-break-inside: avoid !important;
+  }
+</style>
+<body>
+  <div class='container'>
+    <%= yield %>
+  </div>
+
+</body>
+</html>

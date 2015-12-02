@@ -1,0 +1,12 @@
+var errors = "<%= @comment.errors.count %>";
+var comment = "<%= escape_javascript(render(:partial => 'comment', locals: {:comment => @comment})) if !@comment.new_record?  %>";
+if (errors == 0)
+{
+  //$(""+comment+"").appendTo('#comments').fadeIn('slow');
+  $("#comments").append(comment).delay(900).animate("slow");
+  $('#new_comment').trigger("reset");
+  $("#error_comment").html("");
+}
+else {
+  $("#error_comment").html("<div class='alert alert-danger'>Vous devez entrez votre nom et commentaire</div>")
+}

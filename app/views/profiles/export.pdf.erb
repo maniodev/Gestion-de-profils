@@ -1,0 +1,32 @@
+<h2>Profiles</h2>
+<br>
+
+
+<table class="table table-bordered" >
+  <tr>
+    <th>Avatar</th>
+    <th>Nom</th>
+    <th>Prenom</th>
+    <th>Dob</th>
+    <th>Address</th>
+  </tr>
+    <% @profiles.each do |profile| %>
+    <tr>
+      <td>
+        <%= wicked_pdf_image_tag profile.avatar.thumb.url %>
+      </td>
+      <td>
+        <%= profile.prenom %>
+      </td>
+      <td>
+        <%= profile.prenom %>
+      </td>
+      <td>
+        <%= profile.dob %>
+      </td>
+      <td>
+        <%= profile.address %>
+      </td>
+    </tr>
+    <% end %>
+</table>

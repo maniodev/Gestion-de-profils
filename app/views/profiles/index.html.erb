@@ -1,5 +1,15 @@
-<p id="notice"><%= notice %></p>
+<style>
+  .selected{
+    background-color: rgb(235, 238, 246);
+  }
 
+</style>
+
+<%= form_tag export_profiles_path, method: :post do %>
+<%= button_tag(type: 'submit', disabled:true, class: "export btn btn-sm btn-primary", value: "pdf") do %>
+      <span class="glyphicon glyphicon-export"></span> Export as PDF
+    <% end %> &nbsp;
+    <strong>Selectionez le tout</strong>  <input type="checkbox" id="selectAll" value="">
 
 <ul class="list-group" style="padding-top: 20px">
   <% @profiles.each do |profile| %>
@@ -8,21 +18,22 @@
         <div class="col-md-2">
             <%= image_tag profile.avatar.thumb.url, class: "thumb" %>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <p><%= "#{profile.prenom} #{profile.nom}" %></p>
           <p>
           <%= profile.address %>
           </p>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
+          <%= check_box_tag "profiles[]", profile.id %>
           <%= link_to profile, class: "btn btn-xs btn-default" do %>
-                <span class="fa fa-expand"></span> Show
+                <span class="glyphicon glyphicon-eye-open"></span> Show
           <% end %>
            <%= link_to edit_profile_path(profile), class: "btn btn-xs btn-default" do %>
-                 <span class="fa fa-pencil-square-o"></span> Edit
+                 <span class="glyphicon glyphicon-pencil"></span> Edit
            <% end %>
           <%= link_to profile, method: :delete, class: "btn btn-xs btn-default", data: { confirm: "Are you sure?" } do %>
-                 <span class="fa fa-trash"></span> Delete
+                 <span class="glyphicon glyphicon-trash"></span> Delete
            <% end %>
         </div>
 
@@ -31,3 +42,39 @@
   <% end %>
 
 </ul>
+<% end %>
+<%= paginate @profiles %>
+<script>
+
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(".export").prop('disabled', false);
+     $('input[id^="profiles_"]').each(function() {
+         this.checked = true;
+         $(this).parents().eq(2).addClass("selected");
+     });
+  } else {
+   $(".export").prop('disabled', true);
+    $('input[id^="profiles_"]').each(function() {
+         this.checked = false;
+         $(this).parents().eq(2).removeClass("selected");
+     });
+}
+});
+
+
+$(document).on('change', 'input[id^="profiles_"]', function(e) {
+  if(this.checked){
+    $(this).parents().eq(2).addClass("selected");
+  }else
+      $(".export").prop('disabled', true);
+      $(this).parents().eq(2).removeClass("selected");
+          $('input[id^="profiles_"]').each(function() {
+          if (this.checked == true){
+            $(".export").prop('disabled', false);
+              return false;
+          }
+      });
+});
+
+</script>
